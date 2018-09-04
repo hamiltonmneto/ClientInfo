@@ -1,0 +1,10 @@
+c:\users\1615461\source\repos\InfoClient\InfoClient\bin\Debug\InfoClient.exe.config
+c:\users\1615461\source\repos\InfoClient\InfoClient\bin\Debug\InfoClient.exe
+c:\users\1615461\source\repos\InfoClient\InfoClient\bin\Debug\InfoClient.pdb
+c:\users\1615461\source\repos\InfoClient\InfoClient\bin\Debug\Topshelf.dll
+c:\users\1615461\source\repos\InfoClient\InfoClient\bin\Debug\Topshelf.xml
+c:\users\1615461\source\repos\InfoClient\InfoClient\obj\Debug\InfoClient.csprojAssemblyReference.cache
+c:\users\1615461\source\repos\InfoClient\InfoClient\obj\Debug\InfoClient.csproj.CoreCompileInputs.cache
+c:\users\1615461\source\repos\InfoClient\InfoClient\obj\Debug\InfoClient.csproj.CopyComplete
+c:\users\1615461\source\repos\InfoClient\InfoClient\obj\Debug\InfoClient.exe
+c:\users\1615461\source\repos\InfoClient\InfoClient\obj\Debug\InfoClient.pdb

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2016
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfoClient", "InfoClient\InfoClient.csproj", "{5FC44ED5-D335-4682-B9F9-25D66E0C51BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceInstaller", "ServiceInstaller\ServiceInstaller.csproj", "{D7E6027C-2B46-447D-B5CF-263DCB74F6BB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5FC44ED5-D335-4682-B9F9-25D66E0C51BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC44ED5-D335-4682-B9F9-25D66E0C51BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC44ED5-D335-4682-B9F9-25D66E0C51BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC44ED5-D335-4682-B9F9-25D66E0C51BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7E6027C-2B46-447D-B5CF-263DCB74F6BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7E6027C-2B46-447D-B5CF-263DCB74F6BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7E6027C-2B46-447D-B5CF-263DCB74F6BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7E6027C-2B46-447D-B5CF-263DCB74F6BB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2A171562-048D-40C3-8B57-95F4D6BBE964}
+	EndGlobalSection
+EndGlobal

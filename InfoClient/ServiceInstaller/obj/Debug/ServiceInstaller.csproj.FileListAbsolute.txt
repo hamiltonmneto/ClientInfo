@@ -1,0 +1,7 @@
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\bin\Debug\ServiceInstaller.exe.config
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\bin\Debug\ServiceInstaller.exe
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\bin\Debug\ServiceInstaller.pdb
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\obj\Debug\ServiceInstaller.csprojAssemblyReference.cache
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\obj\Debug\ServiceInstaller.csproj.CoreCompileInputs.cache
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\obj\Debug\ServiceInstaller.exe
+c:\users\1615461\source\repos\InfoClient\ServiceInstaller\obj\Debug\ServiceInstaller.pdb
