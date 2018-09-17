@@ -1,19 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
-using System.IO;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Management;
+using InfoClient.Model;
+using System.Net.Http;
+using System.Text;
+using Microsoft.Win32;
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Linq;
 
 namespace ClientInformation
 {
     public class GetInfo
     {
         private Timer _timer;
+        private const string url = "http://localhost:51928/api/Machines/PostMachines";
+
 
         public GetInfo()
         {
@@ -23,21 +28,19 @@ namespace ClientInformation
 
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            string msg = $"{DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") } Teste";
-
-            Console.WriteLine(msg);
-            StringBuilder sb = new StringBuilder();
-            var ipAddress = "IP ADRESS: " + GetLocalIPAddress();
-            sb.AppendLine(ipAddress);
-            var machineName = "MACHINE'S NAME: " + Environment.MachineName;
-            sb.AppendLine(machineName);
-            var userName = "LOGGED USER: " + Environment.UserName;
-            sb.AppendLine(userName);
-            using (StreamWriter arquivo =
-                new StreamWriter(@"C:\tmp\InfoClient\Info.txt", true))
+            using (var client = new HttpClient())
             {
-                arquivo.WriteLine(sb);
-                arquivo.Close();
+                String firstMacAddress = NetworkInterface
+                .GetAllNetworkInterfaces()
+                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .Select(nic => nic.GetPhysicalAddress().ToString())
+                .FirstOrDefault();
+                var hds = GetHardDriveSerial();
+                var machine = new Machine(GetLocalIPAddress(), Environment.MachineName, Environment.UserName,
+                    Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString(), hds, firstMacAddress);
+                var json = Newtonsoft.Json.JsonConvert.SerializeObject(machine);
+                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = client.PostAsync(url, httpContent).Result;
             }
         }
 
@@ -62,6 +65,39 @@ namespace ClientInformation
                 }
             }
             throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
+        public List<HardDrive> GetHardDriveSerial()
+        {
+            var hdCollection = new List<HardDrive>();
+            ManagementObjectSearcher searcher = new
+            ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
+            foreach (ManagementObject wmi_HD in searcher.Get())
+            {
+                HardDrive hd = new HardDrive();
+                hd.Model = wmi_HD["Model"].ToString();
+                hd.Type = wmi_HD["InterfaceType"].ToString();
+                hdCollection.Add(hd);
+            }
+            searcher = new
+            ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMedia");
+
+            int i = 0;
+            foreach (ManagementObject wmi_HD in searcher.Get())
+            {
+                // get the hard drive from collection
+                // using index
+                HardDrive hd = (HardDrive)hdCollection[0];
+
+                // get the hardware serial no.
+                if (wmi_HD["SerialNumber"] == null)
+                    hd.SerialNo = "None";
+                else
+                    hd.SerialNo = wmi_HD["SerialNumber"].ToString();
+
+                ++i;
+            }
+            return hdCollection;
         }
     }
 }
