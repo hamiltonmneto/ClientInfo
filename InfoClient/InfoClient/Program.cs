@@ -20,6 +20,7 @@ namespace ClientInformation
                     p.WhenStopped(gi => gi.Stop());
                 });
                 s.StartAutomatically();
+                s.OnException(ex => Console.WriteLine(ex));
                 s.SetDescription("Get client information test");
                 s.SetDisplayName("ClientInfoTest");
                 s.SetServiceName("ClientInfo");

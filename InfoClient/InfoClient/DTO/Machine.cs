@@ -19,13 +19,16 @@ namespace InfoClient.Model
 
         public List<HardDrive> _HardDrivers { get; set; }
 
-        public Machine(string ip, string name, string logguedUser, string osversion, List<HardDrive> hardDrive)
+        public string _MacAddress { get; set; }
+
+        public Machine(string ip, string name, string logguedUser, string osversion, List<HardDrive> hardDrive, string macAdress)
         {
             _Ip = ip;
             _Name = name;
             _LogguedUser = logguedUser;
             _OSVersion = osversion;
             _HardDrivers = hardDrive;
+            _MacAddress = macAdress;
         }
 
     }

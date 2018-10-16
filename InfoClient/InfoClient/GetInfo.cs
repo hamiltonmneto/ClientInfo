@@ -9,6 +9,8 @@ using System.Text;
 using Microsoft.Win32;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
+using System.Linq;
 
 namespace ClientInformation
 {
@@ -26,14 +28,19 @@ namespace ClientInformation
 
         private void timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            using (var client = new HttpClient())
+            try
             {
-                var hds = GetHardDriveSerial();
-                var machine = new Machine(GetLocalIPAddress(), Environment.MachineName, Environment.UserName,
-                    Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString(), hds);
-                var json = Newtonsoft.Json.JsonConvert.SerializeObject(machine);
-                var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = client.PostAsync(url, httpContent).Result;
+                using (var client = new HttpClient())
+                {
+                    var machine = PrepareMachineInfo();
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(machine);
+                    var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+                    var response = client.PostAsync(url, httpContent).Result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
@@ -92,5 +99,26 @@ namespace ClientInformation
             }
             return hdCollection;
         }
+
+        public Machine PrepareMachineInfo()
+            => new Machine(
+                    GetLocalIPAddress(),
+                    Environment.MachineName, 
+                    Environment.UserName,
+                    GetOsVersion(),
+                    GetHardDriveSerial(),
+                    GetMacAdress()
+                );
+
+        public string GetMacAdress()
+            => NetworkInterface
+                .GetAllNetworkInterfaces()
+                .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                .Select(nic => nic.GetPhysicalAddress().ToString())
+                .FirstOrDefault();
+
+        public string GetOsVersion()
+            => Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString();
+
     }
 }

@@ -65,9 +65,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetInfo.cs" />
-    <Compile Include="Model\HardDrive.cs" />
-    <Compile Include="Model\Machine.cs" />
-    <Compile Include="Model\OSVersionInfo.cs" />
+    <Compile Include="DTO\HardDrive.cs" />
+    <Compile Include="DTO\Machine.cs" />
+    <Compile Include="DTO\OSVersionInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
