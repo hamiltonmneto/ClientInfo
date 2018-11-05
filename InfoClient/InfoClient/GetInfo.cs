@@ -11,6 +11,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.NetworkInformation;
 using System.Linq;
+using Microsoft.Owin.Hosting;
 
 namespace ClientInformation
 {
@@ -40,13 +41,16 @@ namespace ClientInformation
             }
             catch (Exception ex)
             {
-                throw ex;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(ex);
+                Console.ResetColor();
             }
         }
 
         public void Start()
         {
             _timer.Start();
+            Connect();
         }
 
         public void Stop()
@@ -120,5 +124,16 @@ namespace ClientInformation
         public string GetOsVersion()
             => Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString();
 
+        public void Connect()
+        {
+            string url = "http://" +  GetLocalIPAddress() + ":6969/" + GetMacAdress();
+            //var options = new StartOptions("http://" + GetLocalIPAddress() + ":6969")
+            //{
+            //    ServerFactory = "Microsoft.Owin.Host.HttpListener"
+            //};
+            WebApp.Start(url);
+            Console.WriteLine("Server running at {0}\n", url);
+            
+        }
     }
 }
